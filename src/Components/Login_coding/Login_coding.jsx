@@ -239,7 +239,6 @@ const Codezen = () => {
         alert("Please Enter the Phone number !!!");
       } else {
         try {
-          console.log("iama run team");
           const response = await axios.post(regData.getTidApi, {
             teamname: !teamname ? null : teamname,
             gid1: !gid1 ? null : gid1,
@@ -247,7 +246,7 @@ const Codezen = () => {
             gid3: !gid3 ? null : gid3,
             gid4: !gid4 ? null : gid4,
             gid5: !gid5 ? null : gid5,
-            phone: Phone,
+            number1: Phone,
           });
 
           // Setting TID -----
@@ -255,7 +254,6 @@ const Codezen = () => {
           setShowTIDBox(true);
         } catch (error) {
           alert("Something went wrong !!!");
-          console.error("Error signing up:", error);
         }
       }
     } else if (inputList.length < regData.min) {
@@ -264,7 +262,6 @@ const Codezen = () => {
       alert("Please Enter the Phone number !!!");
     } else {
       try {
-        console.log("iama run");
         const response = await axios.post(regData.getTidApi, {
           teamname: !teamname ? null : teamname,
           gid1: !gid1 ? null : gid1,
@@ -272,7 +269,7 @@ const Codezen = () => {
           gid3: !gid3 ? null : gid3,
           gid4: !gid4 ? null : gid4,
           gid5: !gid5 ? null : gid5,
-          phone: Phone,
+          number1: Phone,
         });
 
         // Setting TID -----
@@ -280,7 +277,6 @@ const Codezen = () => {
         setShowTIDBox(true);
       } catch (error) {
         alert("Something went wrong !!!");
-        console.error("Error signing up:", error);
       }
     }
   };
@@ -295,7 +291,7 @@ const Codezen = () => {
   const verifyGID = async (value, index) => {
     try {
       const response = await axios.get(`${regData.gidVerifyApi}${value}`);
-
+      
       if (response.status === 200) {
         if (!inputList.includes(value)) {
           setinputList([...inputList, value]);
@@ -310,26 +306,9 @@ const Codezen = () => {
       }
       return response.data;
     } catch (error) {
-      alert("Something Went Wrong!!!\n"+error.response.data.split(":")[1]);
-      console.error("Error verifying GID:",error);
-      console.log(error.response.data);
-    }
-  };
-
-  const [popupStyle, showPopup] = useState("hide");
-
-  const popup = () => {
-    showPopup("login-popup");
-    setTimeout(() => showPopup("hide"), 3000);
-  };
-
-  // Function to show TIDDisplayBox
-
-  const showTIDBoxHandler = () => {
-    if (verifiedCount === 2) {
-      setShowTIDBox(true);
-    } else {
-      alert("Please verify both GIDs before generating TID");
+      if (error.response.status === 500 || error.response.status === 406) {
+        alert("GID already exists ");
+      }
     }
   };
 
