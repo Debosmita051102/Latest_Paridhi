@@ -26,6 +26,9 @@ const Codezen = () => {
   const { eventRegName } = useParams();
 
   const apiUrl = String(import.meta.env.VITE_API_MAIN);
+  const headers = {
+    "Access-Control-Allow-Origin": '*'
+  }
 
   const eventRegs = {
     war_8kgReg: {
@@ -248,7 +251,7 @@ const Codezen = () => {
             gid4: !gid4 ? null : gid4,
             gid5: !gid5 ? null : gid5,
             phone: Phone,
-          });
+          },{headers});
 
           // Setting TID -----
           setTID(response.data);
