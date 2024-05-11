@@ -26,6 +26,9 @@ const Codezen = () => {
   const { eventRegName } = useParams();
 
   const apiUrl = String(import.meta.env.VITE_API_MAIN);
+  const headers = {
+    "Access-Control-Allow-Origin": '*'
+  }
 
   const eventRegs = {
     war_8kgReg: {
